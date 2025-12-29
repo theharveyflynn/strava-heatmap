@@ -1,3 +1,23 @@
+import os
+import requests
+
+CLIENT_ID = os.environ["STRAVA_CLIENT_ID"]
+CLIENT_SECRET = os.environ["STRAVA_CLIENT_SECRET"]
+REFRESH_TOKEN = os.environ["STRAVA_REFRESH_TOKEN"]
+
+def get_access_token():
+    response = requests.post(
+        "https://www.strava.com/oauth/token",
+        data={
+            "client_id": CLIENT_ID,
+            "client_secret": CLIENT_SECRET,
+            "refresh_token": REFRESH_TOKEN,
+            "grant_type": "refresh_token",
+        },
+    )
+    return response.json()["access_token"]
+
+
 from stravalib.client import Client
 import json
 import os
